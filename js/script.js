@@ -1,5 +1,7 @@
 const body = document.body;
 const themeToggle = document.getElementById('themeToggle');
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
 const savedTheme = localStorage.getItem('theme') || 'light';
 body.dataset.theme = savedTheme;
 
@@ -8,6 +10,20 @@ themeToggle.addEventListener('click', () => {
     body.dataset.theme = theme;
     localStorage.setItem('theme', theme);
 });
+
+if (navToggle && navLinks) {
+    navToggle.addEventListener('click', () => {
+        const isOpen = navLinks.classList.toggle('is-open');
+        navToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    navLinks.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('is-open');
+            navToggle.setAttribute('aria-expanded', 'false');
+        });
+    });
+}
 
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
